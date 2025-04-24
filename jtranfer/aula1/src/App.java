@@ -1,5 +1,8 @@
+import java.io.FileOutputStream;
 import java.io.FileWriter;//Classe para escrever no arquivo
 import java.io.IOException;//Classe para tratar exceções no arquivo
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Scanner;
 
 public class App {
@@ -10,7 +13,7 @@ public class App {
         String meioTransporte = "";
 
         //classe para recebimento de dados
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, "UTF-8");
         
 
         System.out.println("-------Pesquisa de Transporte Diário-------");
@@ -58,5 +61,15 @@ public class App {
         }
 
         System.out.println("Nome: "+nome+","+" Meio de Transporte: "+meioTransporte); 
+    
+         try (Writer escritor = new OutputStreamWriter(new FileOutputStream("dados.txt", true), "UTF-8")) {
+            escritor.write(nome+", "+meioTransporte+"\n");
+            System.out.println("dados gravados com sucesso");
+            
+        } catch (IOException e) {
+            System.out.println("Erro ao gravar os dados" +e.getMessage());
+            
+        }
+    
     }
 }
